@@ -7,12 +7,16 @@
 #include <stdbool.h>
 typedef enum {
     KIDS,
-    HIGH_SCHOOL,
+    HIGHSCHOOL,
     ADULT
 } Zone;
 typedef struct book_struct* Book;
-Book Book_new(char name[],int number,int promotion,Zone zone);
-char* getName(Book b);
-char* get_zone_name();
-/*Book* p1 = Book_new();*/
+typedef struct bookcopy_struct* BookCopy;
+BookCopy BookCopy_new(void);
+Book Book_new(char name[],int booknumber,int promotion,Zone zone);
+char *ZoneToString(Zone zone);
+char* get_zone_name(Book b);
+void print_book(Book b);
+void print_copy(BookCopy c);
+
 #endif /* books_h */

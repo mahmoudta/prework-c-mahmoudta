@@ -1,23 +1,22 @@
 #include <stdio.h>
 #include "local_library.h"
-BookCopy bookcopys[10];
-int serchinbookcopys(int serial_number){
+int serchinbookcopys(BookCopy* bookcopyarr,int serial_number){
     int j;
     for(j=0;j<10;j++){
-        if(bookcopys[j].serialnumber==serial_number)
+        if(bookcopyarr[j].serialnumber==serial_number)
             return j;
     }
     return -1;
 }
 
-void borrow_or_retern(bool borowing_or_returing){
+void borrow_or_retern(BookCopy* bookcopyarr,bool borowing_or_returing){
     int index,serial_number;
     char* sentence_to_print=borowing_or_returing?"borrowed":"returned";
     printf("enter copy serial number: ");
     scanf("%d",&serial_number);
-    index=serchinbookcopys(serial_number);
+    index=serchinbookcopys(bookcopyarr,serial_number);
     if(index!=-1){
-        if(borrow_copy(&bookcopys[index],borowing_or_returing)==-1)
+        if(borrow_copy(&bookcopyarr[index],borowing_or_returing)==-1)
             printf("*** copy is already %s ***\n",sentence_to_print);
         else
             printf("*** you just %s the copy ***\n",sentence_to_print);
@@ -27,21 +26,25 @@ void borrow_or_retern(bool borowing_or_returing){
 }
 
 int main(int argc, const char * argv[]) {
-    int i,booknumber,choice=0;
+    int i,bookcopysize,booknumber,choice=0;
+    BookCopy *bookcopyarr;
     for(i=0;i<N;i++){
         print_book(&books[i]);
     }
-    printf("please choose 10 book-copy to the library, to add enter its book number.\n");
+    printf("how many book-copy you want: ");
+    scanf("%d",&bookcopysize);
+    bookcopyarr = malloc( (size_t)(bookcopysize)*sizeof(BookCopy));
+    printf("please choose %d book-copy to the library, to add enter its book number.\n",bookcopysize);
     i=0;
-    while(i<10){
+    while(i<bookcopysize){
         printf("copy book %d: ",i+1);
         scanf("%d",&booknumber);
         if(findnamebynumber(booknumber)==NULL){
             printf("*** wrong book number please try again*** \n\n");
         }
         else{
-            init_copy(&bookcopys[i],booknumber);
-            print_copy(&bookcopys[i]);
+            bookcopyarr[i]=*create_copy(booknumber);
+            print_copy(&bookcopyarr[i]);
             i++;
         }
     }
@@ -52,10 +55,10 @@ int main(int argc, const char * argv[]) {
         switch (choice)
         {
             case 1:
-                borrow_or_retern(true);
+                borrow_or_retern(bookcopyarr,true);
                 break;
             case 2:
-                borrow_or_retern(false);
+                borrow_or_retern(bookcopyarr,false);
                 break;
             case 9:
                 printf("GoodBye.\n");
@@ -67,5 +70,6 @@ int main(int argc, const char * argv[]) {
                   
         }
     }
+    free (bookcopyarr);
     return 0;
 }

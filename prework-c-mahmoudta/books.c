@@ -1,7 +1,8 @@
 #include "books.h"
 static char *Zones[] = { "kids", "highshool", "adult","documenrary","comics"};
-BookCopy* BookCopy_new(void) {
+BookCopy* create_copy(int booknumber) {
     BookCopy* p = malloc(sizeof(*p));
+    init_copy(p, booknumber);
     return p;
 }
 Book* Book_new(int booknumber,char name[],int promotion,Zone zone) {

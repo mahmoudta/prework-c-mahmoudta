@@ -27,7 +27,7 @@ struct bookcopy_struct{
 };
 typedef struct book_struct Book;
 typedef struct bookcopy_struct BookCopy;
-BookCopy* BookCopy_new(void);
+BookCopy* create_copy(int booknumber);
 Book* Book_new(int booknumber,char name[],int promotion,Zone zone);
 char *ZoneToString(Zone zone);
 char* get_zone_name(Book* b);

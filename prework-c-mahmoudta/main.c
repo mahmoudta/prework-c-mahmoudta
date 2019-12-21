@@ -34,6 +34,9 @@ int main(int argc, const char * argv[]) {
     do_for_books(&books[0],N,Pprint_nicely);
     do_for_books(&books[0],N,Pprint_non_fiction);
     do_for_books(&books[0],N,Pprint_most_promotedn);
+    printf("the minimum promotion is %d\n",get_min_promotion(books,N));
+    printf("the minimum thrilling factor is %f\n\n",get_min_thrilling_factor(books,N));
+    
     for(i=0;i<N;i++){
         print_book(&books[i]);
     }

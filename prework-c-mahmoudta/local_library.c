@@ -1,7 +1,7 @@
 #include "local_library.h"
 
 Book books[] = {
-{1001, "Sun Don't Shine", 40, ADULT,THRILLER},
+    {1001, "Sun Don't Shine", 40, ADULT,THRILLER},
 {1002, "Irma la dos", -100, DOCUMENTARY,DRAMA},
 {1003, "Starship Troopers: Invasion", -68, KIDS,COMEDY},
 {1004, "Year of the Jellyfish", 5, ADULT,NON_FICTION},

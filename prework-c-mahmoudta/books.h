@@ -61,4 +61,6 @@ bool is_repairable(BookCopy* c);
 bool is_ok(BookCopy* c);
 bool is_useless(BookCopy* c);
 bool are_in_same_condition(BookCopy* c1,BookCopy* c2);
+int get_min_promotion(Book books[],int N);
+float get_min_thrilling_factor(Book books[],int N);
 #endif /* books_h */

@@ -197,3 +197,24 @@ bool are_in_same_condition(BookCopy* c1,BookCopy* c2){
         return true;
     return false;
 }
+int get_min_promotion(Book books[],int N){
+    int i,min=0;
+    if(books!=NULL)
+        min=books[0].promotion;
+    for(i=0;i<N;i++){
+        if(min>(books[i].promotion))
+            min=books[i].promotion;
+    }
+    return min;
+}
+float get_min_thrilling_factor(Book books[],int N){
+    int i;
+    float min = 0.0;
+    for(i=0;i<N;i++){
+        if(books[i].genre==THRILLER){
+            if(min>(books[i].genreData.thriller))
+                min=books[i].genreData.thriller;
+        }
+    }
+    return min;
+}

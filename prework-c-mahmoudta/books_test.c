@@ -3,7 +3,10 @@
 int main(int argc, const char * argv[]) {
     Book *p1;
     BookCopy pc1;
-    
+    char* dst = NULL;
+    char* src="ROBinson cruSOE";
+    get_nice_book_name(src,&dst);
+    printf("befor= %s ,after= %s\n\n\n\n","ROBinson cruSOE",dst);
     
 pc1=BookCopy_new();
     init_copy(pc1,2345);

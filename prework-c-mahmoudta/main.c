@@ -28,10 +28,12 @@ void borrow_or_retern(BookCopy* bookcopyarr,bool borowing_or_returing){
 int main(int argc, const char * argv[]) {
     int i,bookcopysize,booknumber,choice=0;
     BookCopy *bookcopyarr;
-    char* dst = NULL;
-    char* src="ROBinson cruSOE";
-    get_nice_book_name(src,&dst);
-    printf("befor= %s ,after= %s\n\n\n\n","ROBinson cruSOE",dst);
+    pfunction Pprint_nicely = &print_nicely;
+    pfunction Pprint_non_fiction= &print_non_fiction;
+    pfunction Pprint_most_promotedn= &print_most_promoted;
+    do_for_books(&books[0],N,Pprint_nicely);
+    do_for_books(&books[0],N,Pprint_non_fiction);
+    do_for_books(&books[0],N,Pprint_most_promotedn);
     for(i=0;i<N;i++){
         print_book(&books[i]);
     }

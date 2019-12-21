@@ -5,13 +5,13 @@ BookCopy* create_copy(int booknumber) {
     init_copy(p, booknumber);
     return p;
 }
-static void print_drama(Book* b){
+static void print_drama(const Book* b){
     printf("the genre is drama\nplot quality is %d\ntextquality is %d\n\n",b->genreData.drama.plot_quality,b->genreData.drama.text_quality);
 }
-static void print_thriller(Book* b){
+static void print_thriller(const Book* b){
     printf("the genre is thriller\nthe average thriller is %f\n\n",b->genreData.thriller);
 }
-static void print_comedy(Book* b){
+static void print_comedy(const Book* b){
     printf("the genre is comedy\nthe quality of the humor is %d\nthe humer type is ",b->genreData.comedy.humor_quality);
     switch (b->genreData.comedy.humor_type) {
         case 'N':
@@ -32,7 +32,7 @@ static void print_comedy(Book* b){
     }
         
 }
-static void print_non_fiction(Book* b){
+static void print_non_fictions(const Book* b){
     printf("the genre is non-fiction\nthe field of the book is %s\n\n",(b->genreData.non_fiction[0]=='\0')?"Null":b->genreData.non_fiction);
 }
 Book* Book_new(int booknumber,char name[],int promotion,Zone zone) {
@@ -52,10 +52,10 @@ Book* Book_new(int booknumber,char name[],int promotion,Zone zone) {
 char *ZoneToString(Zone zone){
     return Zones[zone];
 }
-char* get_zone_name(Book* b){
+char* get_zone_name(const Book* b){
     return (ZoneToString(b->zone));
 }
-void print_book(Book* b){
+void print_book(const Book* b){
     printf("Book Details\nName: %s \nNumber: %d \nPromotion: %d \nBook Can Be Found in the '%s' Section\n",b->name,b->booknumber,b->promotion,get_zone_name(b));
     switch (b->genre) {
         case 0:
@@ -69,7 +69,7 @@ void print_book(Book* b){
             print_comedy(b);
             break;
         case 3:
-            print_non_fiction(b);
+            print_non_fictions(b);
             break;
             
         default:
@@ -79,20 +79,24 @@ void print_book(Book* b){
     
     
 }
-void get_nice_book_name(char* src,char** dst){
+void get_nice_book_name(const char* src,char** dst){
     int i=0;
     bool charafterspace=false;
     char *new_name = (char*) malloc(sizeof(src));
     while(src[i]!='\0'){
-        if(((i==0)||(charafterspace))&(src[i]>=97&src[i]<=122)){
-            charafterspace=false;
-            new_name[i]=src[i]-32;
-        }else if((i!=0)&(!charafterspace)&(src[i]>=65&src[i]<=90)){
-            new_name[i]=(src[i]+32);
-        }else if((!charafterspace)&(src[i]==32)){
+        if(src[i]==32){
             new_name[i]=src[i];
             charafterspace=true;
+        }else if((i==0)||(charafterspace)){
+            charafterspace=false;
+            if(src[i]>=97&src[i]<=122)
+                new_name[i]=src[i]-32;
+            else
+                new_name[i]=src[i];
         }else{
+            if(src[i]>=65&src[i]<=90)
+            new_name[i]=(src[i]+32);
+            else
             new_name[i]=src[i];
         }
         i++;
@@ -100,8 +104,32 @@ void get_nice_book_name(char* src,char** dst){
     new_name[i]='\0';
     *dst=new_name;
 }
+void print_nicely(const Book* pbook){
+    char *nice_name=NULL;
+    
+    /*strcat(old_name,pbook->name);*/
+get_nice_book_name(&(pbook->name[0]),&nice_name);
+    printf("%s\n",nice_name);
+}
 void print_copy(BookCopy* c){
     printf("Copy Details\nNumber: %d \nserialnumber: %d \nBorrowed %d times\nThe Book %s Currently Borrowed\n\n",c->booknumber,c->serialnumber,c->borrowedtimes,c->is_borrowed?"Is" : "Is Not");
+}
+void print_non_fiction(const Book* pbook){
+    if((pbook->genre)==NON_FICTION){
+        printf("book name : ");
+        print_nicely(pbook);
+        printf("field is %s\n\n",pbook->genreData.non_fiction);
+    }
+    else
+        printf("---\n\n");
+}
+void print_most_promoted(const Book* pbook){
+    if((pbook->promotion)>50)
+    print_book(pbook);
+    
+}
+void do_for_books(Book* pbook,int num,pfunction function){
+    function(pbook);
 }
 int borrow_copy(BookCopy* c,bool is_borrowing){
     if(is_borrowing==c->is_borrowed) return -1;

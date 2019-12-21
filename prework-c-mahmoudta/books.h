@@ -12,11 +12,25 @@ typedef enum {
     DOCUMENTARY,
     COMICS
 } Zone;
+typedef enum{
+    DRAMA,
+    THRILLER,
+    COMEDY,
+    NON_FICTION
+}Genre;
+union Data{
+    float thriller;
+    char non_fiction[4];
+    struct { int text_quality; int plot_quality; } drama;
+    struct { int humor_quality; char humor_type; } comedy;
+};
 struct book_struct{
     int booknumber;
     char name[NAME_LEN];
     int promotion;
     Zone zone;
+    Genre genre;
+    union Data genreData;
 };
 struct bookcopy_struct{
     int booknumber;

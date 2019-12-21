@@ -82,7 +82,7 @@ void print_book(Book* b){
 void get_nice_book_name(char* src,char** dst){
     int i=0;
     bool charafterspace=false;
-    char new_name[sizeof(src)];
+    char *new_name = (char*) malloc(sizeof(src));
     while(src[i]!='\0'){
         if(((i==0)||(charafterspace))&(src[i]>=97&src[i]<=122)){
             charafterspace=false;
@@ -98,7 +98,6 @@ void get_nice_book_name(char* src,char** dst){
         i++;
     }
     new_name[i]='\0';
-    printf("%s\n",new_name);
     *dst=new_name;
 }
 void print_copy(BookCopy* c){

@@ -18,11 +18,11 @@ void borrow_or_retern(bool borowing_or_returing){
     index=serchinbookcopys(serial_number);
     if(index!=-1){
         if(borrow_copy(&bookcopys[index],borowing_or_returing)==-1)
-            printf("***copy is already %s***\n",sentence_to_print);
+            printf("*** copy is already %s ***\n",sentence_to_print);
         else
-            printf("***you just %s the copy***\n",sentence_to_print);
+            printf("*** you just %s the copy ***\n",sentence_to_print);
     }else{
-         printf("***wrong serial number***\n");
+         printf("*** wrong serial number ***\n");
     }
 }
 
@@ -37,7 +37,7 @@ int main(int argc, const char * argv[]) {
         printf("copy book %d: ",i+1);
         scanf("%d",&booknumber);
         if(findnamebynumber(booknumber)==NULL){
-            printf("***wrong book number please try again***\n\n");
+            printf("*** wrong book number please try again*** \n\n");
         }
         else{
             init_copy(&bookcopys[i],booknumber);
@@ -61,7 +61,7 @@ int main(int argc, const char * argv[]) {
                 printf("GoodBye.\n");
                 break;
             default:
-                printf("***wrong choice please try again***\n\n");
+                printf("*** wrong choice please try again ***\n\n");
                     
                 break;
                   

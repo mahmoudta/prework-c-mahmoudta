@@ -5,6 +5,36 @@ BookCopy* create_copy(int booknumber) {
     init_copy(p, booknumber);
     return p;
 }
+static void print_drama(Book* b){
+    printf("the genre is drama\nplot quality is %d\ntextquality is %d\n\n",b->genreData.drama.plot_quality,b->genreData.drama.text_quality);
+}
+static void print_thriller(Book* b){
+    printf("the genre is thriller\nthe average thriller is %f\n\n",b->genreData.thriller);
+}
+static void print_comedy(Book* b){
+    printf("the genre is comedy\nthe quality of the humor is %d\nthe humer type is ",b->genreData.comedy.humor_quality);
+    switch (b->genreData.comedy.humor_type) {
+        case 'N':
+            printf("nonsense humor\n\n");
+            break;
+        case 'S':
+            printf("sophisticated humor\n\n");
+            break;
+        case 'P':
+            printf("puns\n\n");
+            break;
+        case 'O':
+            printf("other\n\n");
+            break;
+        default:
+            printf("NULL\n\n");
+            break;
+    }
+        
+}
+static void print_non_fiction(Book* b){
+    printf("the genre is non-fiction\nthe field of the book is %s\n\n",(b->genreData.non_fiction[0]=='\0')?"Null":b->genreData.non_fiction);
+}
 Book* Book_new(int booknumber,char name[],int promotion,Zone zone) {
     Book* p = malloc(sizeof(*p));
     strcpy(p->name,name);
@@ -29,43 +59,47 @@ void print_book(Book* b){
     printf("Book Details\nName: %s \nNumber: %d \nPromotion: %d \nBook Can Be Found in the '%s' Section\n",b->name,b->booknumber,b->promotion,get_zone_name(b));
     switch (b->genre) {
         case 0:
-            printf("the genre is drama\nplot quality is %d\ntextquality is %d\n\n",b->genreData.drama.plot_quality,b->genreData.drama.text_quality);
+            print_drama(b);
             break;
         case 1:
-            printf("the genre is thriller\nthe average thriller is %f\n\n",b->genreData.thriller);
+            print_thriller(b);
         
             break;
         case 2:
-            printf("the genre is comedy\nthe quality of the humor is %d\nthe humer type is ",b->genreData.comedy.humor_quality);
-            switch (b->genreData.comedy.humor_type) {
-                case 'N':
-                    printf("nonsense humor\n\n");
-                    break;
-                case 'S':
-                    printf("sophisticated humor\n\n");
-                    break;
-                case 'P':
-                    printf("puns\n\n");
-                    break;
-                case 'O':
-                    printf("other\n\n");
-                    break;
-                default:
-                    printf("NULL\n\n");
-                    break;
-            }
-                
+            print_comedy(b);
             break;
         case 3:
-            printf("the genre is non-fiction\nthe field of the book is %s\n\n",(b->genreData.non_fiction[0]=='\0')?"Null":b->genreData.non_fiction);
+            print_non_fiction(b);
             break;
             
         default:
-            printf("\n\n");
+            printf("genre not defined in switch\n\n");
             break;
     }
     
     
+}
+void get_nice_book_name(char* src,char** dst){
+    int i=0;
+    bool charafterspace=false;
+    char new_name[sizeof(src)];
+    while(src[i]!='\0'){
+        if(((i==0)||(charafterspace))&(src[i]>=97&src[i]<=122)){
+            charafterspace=false;
+            new_name[i]=src[i]-32;
+        }else if((i!=0)&(!charafterspace)&(src[i]>=65&src[i]<=90)){
+            new_name[i]=(src[i]+32);
+        }else if((!charafterspace)&(src[i]==32)){
+            new_name[i]=src[i];
+            charafterspace=true;
+        }else{
+            new_name[i]=src[i];
+        }
+        i++;
+    }
+    new_name[i]='\0';
+    printf("%s\n",new_name);
+    *dst=new_name;
 }
 void print_copy(BookCopy* c){
     printf("Copy Details\nNumber: %d \nserialnumber: %d \nBorrowed %d times\nThe Book %s Currently Borrowed\n\n",c->booknumber,c->serialnumber,c->borrowedtimes,c->is_borrowed?"Is" : "Is Not");

@@ -46,6 +46,7 @@ Book* Book_new(int booknumber,char name[],int promotion,Zone zone);
 char *ZoneToString(Zone zone);
 char* get_zone_name(Book* b);
 void print_book(Book* b);
+void get_nice_book_name(char* src,char** dst);
 void print_copy(BookCopy* c);
 int borrow_copy(BookCopy* c,bool is_borrowing);
 void init_copy(BookCopy* c,int booknumber);
